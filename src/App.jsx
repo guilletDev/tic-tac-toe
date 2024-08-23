@@ -33,10 +33,13 @@ function App() {
  const [turn, setTurn] = useState(TURNS.X)
 
  const updateBoard = (index)=>{
+    //Si ya tiene algo dentro no se actualiza al hacer click de nuevo. Esto para que mantenga su valor.
+    if(board[index]) return 
+
     const newBoard = [...board]
     newBoard[index] = turn //X o O
     setBoard(newBoard) //Actualizamos resultado. 
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X //Actualizar turno.
     setTurn(newTurn)
  }
  //updateBoard: función
