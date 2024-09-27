@@ -64,6 +64,13 @@ function App() {
   return null //Si no hay ganador.
  }
 
+ /*Funcion para resetear el juego */ 
+const resetGame = ()=>{
+  setBoard (Array(9).fill(null))
+  setTurn(TURNS.X)
+  setWinner(null)
+ }
+
  const updateBoard = (index)=>{
     //Si ya tiene algo dentro o hay ganador no se actualiza al hacer click de nuevo. Esto para que mantenga su valor.
     if(board[index] || winner) return 
@@ -79,7 +86,7 @@ function App() {
       //La actualización de los estados en React son asíncrono
       setWinner(newWinner) 
       //No bloquea la ejecución de la función que viene despues
-      alert(`el ganador es ${newWinner}`)
+      /* alert(`el ganador es ${newWinner}`) */
       //En caso de hacer un console.log a continuación no mostraria el resultado actualizado.
       //console.log(newWinner)
     }
@@ -92,6 +99,7 @@ function App() {
   return (
     <main className='board'>
         <h1>Tic-Tac-Toe</h1>
+        <button onClick={resetGame}>Reset del juego</button>
         
         <section className='game'>  
           {board.map((_, index)=>{
@@ -118,6 +126,32 @@ function App() {
                 {TURNS.O}
             </Square>
         </section>
+
+        {/* Creamos el modal para indicar quien es el ganador */}
+        {
+          winner !== null && (
+            <section className='winner'>
+              <div className="text">
+                 <h2>
+                    {
+                       winner === false ? 'Empate' : 'Ganó'
+                    }
+                 </h2>
+
+                 <header className="win">
+                      {winner && <Square>{winner}</Square> }
+                 </header>
+                 <footer>
+                    <button onClick={resetGame}>Empezar de nuevo</button>
+                 </footer>
+                 
+              </div>
+
+
+            </section>
+          )
+          
+        }
     </main>
       
     
