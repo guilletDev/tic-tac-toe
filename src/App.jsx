@@ -71,6 +71,10 @@ const resetGame = ()=>{
   setWinner(null)
  }
 
+const checkEndGame = (newBoard)=>{
+    return newBoard.every((square)=> square !== null)
+}
+
  const updateBoard = (index)=>{
     //Si ya tiene algo dentro o hay ganador no se actualiza al hacer click de nuevo. Esto para que mantenga su valor.
     if(board[index] || winner) return 
@@ -89,6 +93,8 @@ const resetGame = ()=>{
       /* alert(`el ganador es ${newWinner}`) */
       //En caso de hacer un console.log a continuación no mostraria el resultado actualizado.
       //console.log(newWinner)
+    } else if(checkEndGame(newBoard)){
+      setWinner(false) //El false indica Empate como indicamos al principio.
     }
  }
  //updateBoard: función
