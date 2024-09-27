@@ -1,4 +1,6 @@
 import { useState } from "react"
+import confetti from "canvas-confetti"
+import { Square } from "./components/Square"
 //Creamos la constante turns, lo que se va a mostrar en la tabla.
 const TURNS = {
   X: 'x',
@@ -8,23 +10,6 @@ const TURNS = {
 /* const board = Array(9).fill(null) */
 //Pasamos el board a un estado.
 
-//Square es el cuadrado del tablero.
-//Propiedad children: lo que quiere tener dentro del tablero, ya sea la x o la o updateBoard: actualizar el tablero al hacer click. Index: para saber la posicion 
-//Prop isSelected: booleano que te dice el turno.
-const Square = ({children, isSelected, updateBoard, index }) => {
-  //Se crea constante className para saber cual es seleccionado y se usa como props en el div.
-  const className = `square ${ isSelected ? 'is-selected' : ''} `
-  //se pasa el indice para saber en cual posición hizo el click.
-  const handleClick = ()=>{
-    updateBoard(index)
-  }
-
-  return(
-    <div onClick={handleClick} className={className}>
-      {children}
-    </div>
-  )
-}
 
 // Todos los combos ganadores.
 const WINNER_COMBOS = [
@@ -89,6 +74,7 @@ const checkEndGame = (newBoard)=>{
     if(newWinner){
       //La actualización de los estados en React son asíncrono
       setWinner(newWinner) 
+      confetti()
       //No bloquea la ejecución de la función que viene despues
       /* alert(`el ganador es ${newWinner}`) */
       //En caso de hacer un console.log a continuación no mostraria el resultado actualizado.
@@ -108,7 +94,7 @@ const checkEndGame = (newBoard)=>{
         <button onClick={resetGame}>Reset del juego</button>
         
         <section className='game'>  
-          {board.map((_, index)=>{
+          {board.map((square, index)=>{
               return (
                 <Square 
                   key={index}
@@ -117,7 +103,7 @@ const checkEndGame = (newBoard)=>{
                   
                   
                 >
-                  {board[index]}
+                  {square}
                 </Square>
               )
           })}
