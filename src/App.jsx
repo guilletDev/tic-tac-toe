@@ -4,6 +4,7 @@ import { Square } from "./components/Square"
 import { TURNS } from "./constants"
 import { checkWinnerFrom, checkEndGame } from "./logic/board"
 import { WinnerModal } from "./components/WinnerModal"
+import { saveGameToStorage, resetGameStorage } from "./logic/storage"
 
 //Se crea la tabla con un array de 9 elementos donde rellenamos con null.
 /* const board = Array(9).fill(null) */
@@ -13,10 +14,17 @@ import { WinnerModal } from "./components/WinnerModal"
 
 
 function App() {
- // Estado para iniciar el array con valores null. 
- const [board, setBoard] = useState(Array(9).fill(null))
+ // Estado para iniciar el board con una funcion que obtiene valores del localStorage y sino muestra un array con valores null.
+ const [board, setBoard] = useState(()=>{
+  const boardFromStorage = window.localStorage.getItem('board')
+  if(boardFromStorage) return JSON.parse(boardFromStorage) 
+   return Array(9).fill(null)
+ })
  // Estado para saber de quien es el turno.
- const [turn, setTurn] = useState(TURNS.X)
+ const [turn, setTurn] = useState(()=>{
+    const turnFromStorage = window.localStorage.getItem('turn')
+    return turnFromStorage ?? TURNS.X
+ }  )
  // Estado para indicar ganador. Cuando es null no hay ganador y cuando es false hay empate.
  const [winner, setWinner] = useState(null)
 
@@ -27,6 +35,9 @@ const resetGame = ()=>{
   setBoard (Array(9).fill(null))
   setTurn(TURNS.X)
   setWinner(null)
+
+  //Removemos los valores 
+  resetGameStorage()
  }
 
 
@@ -40,7 +51,10 @@ const resetGame = ()=>{
     setBoard(newBoard) //Actualizamos resultado. 
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X //Actualizar turno.
     setTurn(newTurn)
-    //Revisar si hay ganador
+    // Guardar aqui la partida. Usamos localStorage
+    saveGameToStorage({board: newBoard , turn: newTurn})
+
+    // Revisar si hay ganador
     const newWinner = checkWinnerFrom(newBoard)
     if(newWinner){
       //La actualización de los estados en React son asíncrono
