@@ -1,7 +1,7 @@
 # Tic-Tac-Toe Game in React
 
 ![Tablero del juego](./public/tic-tac-toe.jpg)
-![Tablero Ganador](./public/tic-tac-toe-ganador.jpg)
+
 
 
 Este proyecto es un juego de **Tres en Raya (Tic-Tac-Toe)** implementado en **React** utilizando los hooks de estado como `useState`. El objetivo es ser el primero en alinear tres símbolos (X u O) en una cuadrícula de 3x3.
@@ -31,6 +31,9 @@ Este proyecto está diseñado para demostrar cómo construir un juego interactiv
 - Los turnos alternan entre los jugadores.
 - El juego detectará automáticamente si un jugador ha ganado o si la partida ha terminado en empate.
 - Usa el botón de "Reset" para comenzar una nueva partida.
+
+
+![Tablero Ganador](./public/tic-tac-toe-ganador.jpg)
 
 ## Uso de Hooks
 
