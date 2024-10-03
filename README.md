@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Game in React
+# Tic-Tac-Toe Juego en React
 
 ![Tablero del juego](./public/tic-tac-toe.jpg)
 
